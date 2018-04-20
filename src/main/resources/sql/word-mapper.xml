@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dictionary">
+
+    <sql id="word">
+        dicId,name,weight,category,tag,relevance,isDeleted,created,updated,extra
+    </sql>
+
+
+    <select id="listWord" resultType="org.cuner.emotion.analysis.entity.Word">
+        SELECT
+        <include refid="word"/>
+        FROM Dictionary
+        WHERE
+        dicId >= #{start} and isDeleted = 0
+        LIMIT #{offset}
+    </select>
+
+</mapper>
