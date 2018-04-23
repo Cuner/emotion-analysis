@@ -5,10 +5,7 @@ import org.cuner.emotion.analysis.entity.Word;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 
 /**
  * Created by houan on 18/3/14.
@@ -16,30 +13,28 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Dictionary {
 
     //所有词库
-    public ConcurrentHashMap<String, Word> wordBank = new ConcurrentHashMap<>();
+    public Map<String, Word> wordBank = new HashMap<>();
 
     //属性词词库，Key为属性词本身
-    public ConcurrentHashMap<String, Word> propertyWords = new ConcurrentHashMap<>();
+    public Map<String, Word> propertyWords = new HashMap<>();
 
     //词根（同义词指向的对象）
-    public ConcurrentHashMap<Integer, Word> rootProperties = new ConcurrentHashMap<>();
+    public Map<Integer, Word> rootProperties = new HashMap<>();
 
     //所有近义词，不包含词根
-    public ConcurrentHashMap<String, Word> synonymWords = new ConcurrentHashMap<>();
+    public Map<String, Word> synonymWords = new HashMap<>();
 
     //情感词词库，Key为情感词本身。
-    public ConcurrentHashMap<String, Word> emotionWords = new ConcurrentHashMap<>();
+    public Map<String, Word> emotionWords = new HashMap<>();
 
     //情感词所对应的属性词词根
-    public ConcurrentHashMap<String, Word> emotionSynonymWords = new ConcurrentHashMap<>();
+    public Map<String, Word> emotionSynonymWords = new HashMap<>();
 
     //新词语（会定期刷到本地文件中，然后拉下来给小编check）
-    public ConcurrentHashMap<String, Integer> newWords = new ConcurrentHashMap<>();
-
+    public Map<String, Integer> newWords = new HashMap<>();
 
     //是否初始化
     protected boolean isInitialize = false;
-
 
     //Singleton
     static class SingletonHandler {
@@ -49,7 +44,6 @@ public class Dictionary {
     public static Dictionary getInstance() {
         return SingletonHandler.INSTANCE;
     }
-
 
     /**
      * 初始化字典, 从db中读取词根, 常驻内存
@@ -64,7 +58,7 @@ public class Dictionary {
             }
         }
 
-        //情感词处理zilin
+        //情感词处理
         Collection<Word> emotionWordSet = emotionWords.values();
         for (Word word : emotionWordSet) {
             if (word.getRelevance() > 0 && rootProperties.containsKey(word.getRelevance())) {
@@ -89,12 +83,10 @@ public class Dictionary {
             return false;
         }
 
-
         List<String> extendsIkWords = new ArrayList<>();
         for (Word word : words) {
             // 加入所有的词库中
             wordBank.put(word.getName(), word);
-
 
             // 判断该词是属性词还是情感词
             if (word.getCategory() == WordConstant.DIC_PROPERTY_MAPPING_VAL) {
@@ -164,7 +156,7 @@ public class Dictionary {
      *
      * @return
      */
-    public ConcurrentHashMap<String, Word> getWordBank() {
+    public Map<String, Word> getWordBank() {
         return wordBank;
     }
 
