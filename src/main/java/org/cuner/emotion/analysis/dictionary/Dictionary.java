@@ -15,14 +15,14 @@ public class Dictionary {
     //所有词库
     public Map<String, Word> wordBank = new HashMap<>();
 
+    //词根（同义词指向的对象）
+    public Map<Integer, Word> rootWords = new HashMap<>();
+
     //属性词词库，Key为属性词本身
     public Map<String, Word> propertyWords = new HashMap<>();
 
-    //词根（同义词指向的对象）
-    public Map<Integer, Word> rootProperties = new HashMap<>();
-
     //所有近义词，不包含词根
-    public Map<String, Word> synonymWords = new HashMap<>();
+    public Map<String, Word> propertySynonymWords = new HashMap<>();
 
     //情感词词库，Key为情感词本身。
     public Map<String, Word> emotionWords = new HashMap<>();
@@ -52,18 +52,18 @@ public class Dictionary {
         //同义词处理
         Collection<Word> propertyWordSet = propertyWords.values();
         for (Word word : propertyWordSet) {
-            if (word.getRelevance() > 0 && rootProperties.containsKey(word.getRelevance())) {
+            if (word.getRelevance() > 0 && rootWords.containsKey(word.getRelevance())) {
                 // 将同义词和其词根, 塞入属性词同义词库中
-                synonymWords.put(word.getName(), rootProperties.get(word.getRelevance()));
+                propertySynonymWords.put(word.getName(), rootWords.get(word.getRelevance()));
             }
         }
 
         //情感词处理
         Collection<Word> emotionWordSet = emotionWords.values();
         for (Word word : emotionWordSet) {
-            if (word.getRelevance() > 0 && rootProperties.containsKey(word.getRelevance())) {
+            if (word.getRelevance() > 0 && rootWords.containsKey(word.getRelevance())) {
                 // 将情感词的词根塞入情感词同义词库中
-                emotionSynonymWords.put(word.getName(), rootProperties.get(word.getRelevance()));
+                emotionSynonymWords.put(word.getName(), rootWords.get(word.getRelevance()));
             }
         }
 
@@ -102,7 +102,7 @@ public class Dictionary {
             // 如果是词根,则塞入词根库中 --> 词根库中,包含了属性词和情感词的词根
             // 扩展词的词根就不考虑了
             if (word.getRelevance() == 0) {
-                rootProperties.put(word.getDicId(), word);
+                rootWords.put(word.getDicId(), word);
             }
         }
 
@@ -128,7 +128,7 @@ public class Dictionary {
      * @return 存在, 则返回词根; 不存在,则返回入参
      */
     public String getRootProperty(String property) {
-        Word rootWord = synonymWords.get(property);
+        Word rootWord = propertySynonymWords.get(property);
         if (rootWord == null || StringUtils.isEmpty(rootWord.getName())) {
             return property;
         } else {
@@ -142,7 +142,7 @@ public class Dictionary {
      * @param emotion 情感词
      * @return 存在, 则返回词根; 不存在,则返回空字符串
      */
-    public String getEmotionRootProperty(String emotion) {
+    public String getRootEmotion(String emotion) {
         Word rootWord = emotionSynonymWords.get(emotion);
         if (rootWord == null || StringUtils.isEmpty(rootWord.getName())) {
             return emotion;

@@ -28,7 +28,7 @@ public class ParserTest {
     public void parseElement() {
         init();
         Parser parser = new Parser();
-        List<Emotion> emotionList = parser.parseElement("一次性买了几件，质量很好没话说，，太值了，朋友都说很个性。");
+        List<Emotion> emotionList = parser.parseElement("质量很好没话说。");
         Assert.assertTrue(CollectionUtils.isNotEmpty(emotionList));
     }
 }

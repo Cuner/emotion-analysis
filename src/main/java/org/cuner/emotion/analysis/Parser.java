@@ -34,8 +34,7 @@ public class Parser {
         Set<String> matchProperties = new HashSet<>();
         Set<String> matchEmotions = new HashSet<>();
         if (!matchPropertyAndEmotion(content, matchProperties, matchEmotions)) {
-            // 没有命中的属性次or情感词,则不用继续玩下去了
-//            log.info("has no properties! radData: {}", rawData);
+            // 没有命中的属性次or情感词
             return emotionList;
         }
 
@@ -136,7 +135,7 @@ public class Parser {
                         continue;
                     }
                     //获取情感词的属性词根
-                    String rootProperty = Dictionary.getInstance().getEmotionRootProperty(matchEmotion);
+                    String rootProperty = Dictionary.getInstance().getRootEmotion(matchEmotion);
 
                     if (sentencesOfRoot.containsKey(rootProperty)) {
                         sentenceList = sentencesOfRoot.get(rootProperty);
