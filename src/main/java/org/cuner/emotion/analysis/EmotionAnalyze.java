@@ -168,7 +168,8 @@ public class EmotionAnalyze {
                     if (i != 0) {
                         if (pEmotion == 0) {
                             if (Math.abs(pMainWeight) == 1) {
-                                pMainWeight = 0;
+                                //TODO
+                                //pMainWeight = 0;
                             }
                         }
                         resValue[index] = getResultScore(pMainWeight, pEmotion, pDegree, pRele, polar);
@@ -214,8 +215,10 @@ public class EmotionAnalyze {
 
         // ?
         if (pEmotion == 0) {
-            if (Math.abs(pMainWeight) == 1)
-                pMainWeight = 0;
+            if (Math.abs(pMainWeight) == 1) {
+                //todo
+                //pMainWeight = 0;
+            }
         }
         resValue[index] = getResultScore(pMainWeight, pEmotion, pDegree, pRele, polar);
         for (int k = 0; k <= index; k++) {
@@ -227,7 +230,8 @@ public class EmotionAnalyze {
     /*决策树*/
     private double getResultScore(double pMainWeight, double pEmotion, double pDegree, double pRele, boolean polar) {
         double mainScore;
-        if (pMainWeight == 0) {
+        // TODO if (pMainWeight == 0) {
+        if (pMainWeight == 0 && pEmotion == 0) {
             mainScore = 0;
         } else {
             if (pEmotion == 0) {
