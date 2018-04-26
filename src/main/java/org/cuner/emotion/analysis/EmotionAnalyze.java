@@ -82,6 +82,8 @@ public class EmotionAnalyze {
                 continue;
             }
 
+            sentencesOfWord += sentence;
+
             //片段分析
             List<String> words = segmentationAnalyze(sentence);
 
