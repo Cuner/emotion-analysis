@@ -82,8 +82,6 @@ public class EmotionAnalyze {
                 continue;
             }
 
-            sentencesOfWord += sentence;
-
             //片段分析
             List<String> words = segmentationAnalyze(sentence);
 
@@ -215,7 +213,6 @@ public class EmotionAnalyze {
             }
         }
 
-        // ?
         if (pEmotion == 0) {
             if (Math.abs(pMainWeight) == 1) {
                 //todo
@@ -268,12 +265,11 @@ public class EmotionAnalyze {
             if (bs.get(i)) {
                 if ((sum > 0 && pres[i] < 0) || (sum < 0 && pres[i] > 0)) {
                     //句子情感多样化
-                    //this.sentencesOfWord = this.commentContents.get(i);
                     if (pres[i] != 0) {   //可以去掉看看
                         //return (int) pres[i];
                     }
                 }
-                //this.sentencesOfWord = this.commentContents.get(i);
+                this.sentencesOfWord += this.commentContents.get(i);
             }
         }
         return sum;
