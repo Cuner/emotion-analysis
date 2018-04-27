@@ -59,6 +59,7 @@ public class EmotionAnalyze {
         }
         commentContents = sentences;
 
+        sentencesOfWord = "";
         int emotionVal = analyzeEmotion();
         return new Emotion(emotionVal, mainWord, mainRootWord, sentencesOfWord);
     }
