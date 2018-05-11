@@ -12,8 +12,6 @@ import java.util.*;
  */
 public class Parser {
 
-    private EmotionAnalyze analyze = new EmotionAnalyze();
-
     /**
      * 分析文本倾向性
      * 1.过滤 -> 不满足要求的直接不继续下去玩
@@ -46,6 +44,7 @@ public class Parser {
 
         //迭代分析
         for (Map.Entry<String, List<String>> entry : splitedSentences.entrySet()) {
+            EmotionAnalyze analyze = new EmotionAnalyze();
             Emotion analyzeEmotionResult = analyze.analyze(entry.getKey(), new ArrayList<>(entry.getValue()));
             emotionList.add(analyzeEmotionResult);
         }
