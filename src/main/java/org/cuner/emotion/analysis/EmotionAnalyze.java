@@ -125,7 +125,7 @@ public class EmotionAnalyze {
             if (mainPropertyFlag.get(sentenceIndex)) {
                 sentencesScores[sentenceIndex] = _countEmotion(propertyWords, segmentLength);
             } else {
-                // 对应关系冗余 例如 mainWord为"不错"，sentence为"很不错"
+                // 对应关系冗余 例如 mainWord为"不错"，sentence为"很不错" 虽然"很不错"包含"不错"，但是："很不错"句子分词只能得到"很不错"关键字
                 // mainWord为"好"，sentences为"XXX好"、"XXX很好"，虽然"XXX很好"包含"好",但是不属于"好"，而属于"很好"这个关键字，所以需要过滤
                 sentencesScores[sentenceIndex] = 0;//无效
                 errorMatchCount++;
