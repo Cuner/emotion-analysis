@@ -61,6 +61,9 @@ public class EmotionAnalyze {
 
         sentencesOfWord = "";
         int emotionVal = analyzeEmotion();
+        if (emotionVal == (-1) * Integer.MAX_VALUE) {
+            return null;
+        }
         return new Emotion(emotionVal, mainWord, mainRootWord, sentencesOfWord);
     }
 
@@ -75,6 +78,7 @@ public class EmotionAnalyze {
         double sentencesScores[] = new double[numOfSentence];
         BitSet mainPropertyFlag = new BitSet(numOfSentence);
         int sentenceIndex = 0;
+        int errorMatchCount = 0;
         for (String sentence : commentContents) {
             //是否疑问句，疑问句的情感直接中性，因为它既不属于正负二者
             if (sentence.endsWith("?") || sentence.endsWith("？")) {
@@ -118,8 +122,19 @@ public class EmotionAnalyze {
 
                 index++;
             }
-            sentencesScores[sentenceIndex] = _countEmotion(propertyWords, segmentLength);
+            if (mainPropertyFlag.get(sentenceIndex)) {
+                sentencesScores[sentenceIndex] = _countEmotion(propertyWords, segmentLength);
+            } else {
+                // 对应关系冗余 例如 mainWord为"不错"，sentence为"很不错"
+                // mainWord为"好"，sentences为"XXX好"、"XXX很好"，虽然"XXX很好"包含"好",但是不属于"好"，而属于"很好"这个关键字，所以需要过滤
+                sentencesScores[sentenceIndex] = 0;//无效
+                errorMatchCount++;
+            }
             sentenceIndex++;
+        }
+
+        if (errorMatchCount == sentenceIndex) {
+            return -1 * Integer.MAX_VALUE;
         }
         return _verifyEmotion(sentencesScores, mainPropertyFlag, sentenceIndex);
     }

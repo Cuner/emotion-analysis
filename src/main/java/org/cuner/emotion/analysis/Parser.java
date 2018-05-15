@@ -42,11 +42,13 @@ public class Parser {
             return emotionList;
         }
 
+        EmotionAnalyze analyze = new EmotionAnalyze();
         //迭代分析
         for (Map.Entry<String, List<String>> entry : splitedSentences.entrySet()) {
-            EmotionAnalyze analyze = new EmotionAnalyze();
             Emotion analyzeEmotionResult = analyze.analyze(entry.getKey(), new ArrayList<>(entry.getValue()));
-            emotionList.add(analyzeEmotionResult);
+            if (analyzeEmotionResult != null) {
+                emotionList.add(analyzeEmotionResult);
+            }
         }
 
         return emotionList;
