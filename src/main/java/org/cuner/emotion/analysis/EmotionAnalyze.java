@@ -88,7 +88,7 @@ public class EmotionAnalyze {
             }
 
             //片段分析
-            List<String> words = segmentationAnalyze(sentence);
+            Set<String> words = segmentationAnalyze(sentence);
 
             int segmentLength = words.size();
             int index = 0;
@@ -145,8 +145,8 @@ public class EmotionAnalyze {
      * @param pStentive
      * @return
      */
-    private List<String> segmentationAnalyze(String pStentive) {
-        List<String> SingleResult = new ArrayList<>();
+    private Set<String> segmentationAnalyze(String pStentive) {
+        Set<String> SingleResult = new HashSet<>();
         List<Term> parse = AnalysisTool.splitSentence2Word(pStentive);
         for (Term term : parse) {
             String word = term.getName();
