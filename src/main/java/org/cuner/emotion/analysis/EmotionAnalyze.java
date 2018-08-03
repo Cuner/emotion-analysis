@@ -184,8 +184,7 @@ public class EmotionAnalyze {
                     if (i != 0) {
                         if (pEmotion == 0) {
                             if (Math.abs(pMainWeight) == 1) {
-                                //TODO
-                                //pMainWeight = 0;
+                                pMainWeight = 0;
                             }
                         }
                         resValue[index] = getResultScore(pMainWeight, pEmotion, pDegree, pRele, polar);
@@ -231,8 +230,7 @@ public class EmotionAnalyze {
 
         if (pEmotion == 0) {
             if (Math.abs(pMainWeight) == 1) {
-                //todo
-                //pMainWeight = 0;
+                pMainWeight = 0;
             }
         }
         resValue[index] = getResultScore(pMainWeight, pEmotion, pDegree, pRele, polar);
